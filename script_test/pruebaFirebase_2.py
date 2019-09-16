@@ -6,6 +6,7 @@ import time
 from script_main import generar_qr
 
 json_data = generar_qr.make_json_data('p_001','Delta-Universidad','alimentadora')
+print(type(json_data))
 json_data['fecha'] = time.strftime("%d/%m/%y")
 json_data['hora'] = time.strftime("%H:%M:%S")
 generar_qr.make_qr(json_data,'prueba_1')
