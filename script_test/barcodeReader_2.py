@@ -24,7 +24,7 @@ OBJ_FIREBASE = firebase_admin.initialize_app(CREDENTIALS, {'databaseURL': 'https
 REFERENCE = db.reference('stored_data')
 
 # variables de personalización para la vista de cámara web
-cap = cv2.VideoCapture(0)  # inicializa la cámara web 0:webcam externa, 1:webcam integrada
+cap = cv2.VideoCapture(1)  # inicializa la cámara web 0:webcam externa, 1:webcam integrada
 bgr = (255, 255, 255)
 text_font = cv2.FONT_HERSHEY_SIMPLEX
 
@@ -41,6 +41,11 @@ def barcodereader(image, bgr):
         cv2.putText(image, data + " - " + type_source, (30, 30), text_font, 0.7, bgr, 2)
         return data
 
+def returndata():
+    new_reference = db.reference('stored_data/updatestation/').order_by_child('paradero').limit_to_last(10)
+    for key in new_reference:
+        print(key)
+
 while True:
     val, frame = cap.read()
     if val:
@@ -55,5 +60,11 @@ while True:
             #print(type(json.loads(barcode)))
         code = cv2.waitKey(10)
         if code == ord('q'):
+            cv2.destroyAllWindows()
+            answer = int(input('Desea descargar la información 1.Si 2.No: '))
+            if answer == 1:
+                returndata()
+            else:
+                print('Adiós')
             break
-cv2.destroyAllWindows()
+
