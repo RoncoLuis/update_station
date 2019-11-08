@@ -56,7 +56,8 @@ while True:
             json_data['fecha'] = time.strftime("%d/%m/%y")
             json_data['hora'] = time.strftime("%H:%M:%S")
             print(json_data)
-            REFERENCE.child('updatestation').child('paradero').push(json_data)
+            #TODO se comento esta linea para no hacer el insert en firebase
+           # REFERENCE.child('updatestation').child('paradero').push(json_data)
             #print(type(json.loads(barcode)))
         code = cv2.waitKey(10)
         if code == ord('q'):
