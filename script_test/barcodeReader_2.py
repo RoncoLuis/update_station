@@ -24,7 +24,7 @@ OBJ_FIREBASE = firebase_admin.initialize_app(CREDENTIALS, {'databaseURL': 'https
 REFERENCE = db.reference('stored_data')
 
 # variables de personalización para la vista de cámara web
-cap = cv2.VideoCapture(1)  # inicializa la cámara web 0:webcam externa, 1:webcam integrada
+cap = cv2.VideoCapture(0)  # inicializa la cámara web 0:webcam externa, 1:webcam integrada
 bgr = (255, 255, 255)
 text_font = cv2.FONT_HERSHEY_SIMPLEX
 
