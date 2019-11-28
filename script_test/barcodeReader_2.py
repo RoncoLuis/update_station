@@ -24,7 +24,8 @@ OBJ_FIREBASE = firebase_admin.initialize_app(CREDENTIALS, {'databaseURL': 'https
 REFERENCE = db.reference('stored_data')
 
 # variables de personalización para la vista de cámara web
-cap = cv2.VideoCapture(0)  # inicializa la cámara web 0:webcam externa, 1:webcam integrada
+cap = cv2.VideoCapture(1)  # inicializa la cámara web 0:webcam externa, 1:webcam integrada
+cam2 = cv2.VideoCapture(2)
 bgr = (255, 255, 255)
 text_font = cv2.FONT_HERSHEY_SIMPLEX
 
@@ -48,14 +49,23 @@ def returndata():
 
 while True:
     val, frame = cap.read()
-    if val:
+    val2,frame2 = cam2.read()
+    if val and val2:
         barcode = barcodereader(frame, bgr)
-        cv2.imshow('updatestation QR', frame)
+        barcode2 = barcodereader(frame2,bgr)
+        cv2.imshow('updatestation QR cam 1', frame)
+        cv2.imshow('Update QR cam 2',frame2)
         if type(barcode) is str:
             json_data = json.loads(barcode)
             json_data['fecha'] = time.strftime("%d/%m/%y")
             json_data['hora'] = time.strftime("%H:%M:%S")
             print(json_data)
+        if type(barcode2) is str:
+        #==================cámara 2 ==================
+            json_data2 = json.loads(barcode2)
+            json_data2['fecha'] = time.strftime("%d/%m/%y")
+            json_data2['hora'] = time.strftime("%H:%M:%S")
+            print(json_data2)
             #TODO se comento esta linea para no hacer el insert en firebase
            # REFERENCE.child('updatestation').child('paradero').push(json_data)
             #print(type(json.loads(barcode)))
